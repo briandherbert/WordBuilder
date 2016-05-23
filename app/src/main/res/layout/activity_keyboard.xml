@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical"
+    tools:context="com.burningaltar.learnwordsnumbers.MainActivity">
+
+    <TextView
+        android:id="@+id/lbl_word"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="#000"
+        android:textSize="38sp"
+        android:textStyle="bold"
+        tools:text="word" />
+
+    <LinearLayout
+        android:id="@+id/letters_row_0"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/btn_a"
+            style="@style/LetterButton"
+            android:text="a" />
+
+        <Button
+            android:id="@+id/btn_b"
+            style="@style/LetterButton"
+            android:text="b" />
+
+        <Button
+            android:id="@+id/btn_c"
+            style="@style/LetterButton"
+            android:text="c" />
+
+        <Button
+            android:id="@+id/btn_d"
+            style="@style/LetterButton"
+            android:text="d" />
+
+        <Button
+            android:id="@+id/btn_e"
+            style="@style/LetterButton"
+            android:text="e" />
+
+        <Button
+            android:id="@+id/btn_f"
+            style="@style/LetterButton"
+            android:text="f" />
+
+        <Button
+            android:id="@+id/btn_g"
+            style="@style/LetterButton"
+            android:text="g" />
+
+        <Button
+            android:id="@+id/btn_h"
+            style="@style/LetterButton"
+            android:text="h" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/letters_row_1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/btn_i"
+            style="@style/LetterButton"
+            android:text="i" />
+
+        <Button
+            android:id="@+id/btn_j"
+            style="@style/LetterButton"
+            android:text="j" />
+
+        <Button
+            android:id="@+id/btn_k"
+            style="@style/LetterButton"
+            android:text="k" />
+
+        <Button
+            android:id="@+id/btn_l"
+            style="@style/LetterButton"
+            android:text="l" />
+
+        <Button
+            android:id="@+id/btn_m"
+            style="@style/LetterButton"
+            android:text="m" />
+
+        <Button
+            android:id="@+id/btn_n"
+            style="@style/LetterButton"
+            android:text="n" />
+
+        <Button
+            android:id="@+id/btn_o"
+            style="@style/LetterButton"
+            android:text="o" />
+
+        <Button
+            android:id="@+id/btn_p"
+            style="@style/LetterButton"
+            android:text="p" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/letters_row_2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/btn_q"
+            style="@style/LetterButton"
+            android:text="q" />
+
+        <Button
+            android:id="@+id/btn_r"
+            style="@style/LetterButton"
+            android:text="r" />
+
+        <Button
+            android:id="@+id/btn_s"
+            style="@style/LetterButton"
+            android:text="s" />
+
+        <Button
+            android:id="@+id/btn_t"
+            style="@style/LetterButton"
+            android:text="t" />
+
+        <Button
+            android:id="@+id/btn_u"
+            style="@style/LetterButton"
+            android:text="u" />
+
+        <Button
+            android:id="@+id/btn_v"
+            style="@style/LetterButton"
+            android:text="v" />
+
+        <Button
+            android:id="@+id/btn_w"
+            style="@style/LetterButton"
+            android:text="w" />
+
+        <Button
+            android:id="@+id/btn_x"
+            style="@style/LetterButton"
+            android:text="x" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/letters_row_3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/btn_y"
+            style="@style/LetterButton"
+            android:text="y" />
+
+        <Button
+            android:id="@+id/btn_z"
+            style="@style/LetterButton"
+            android:text="z" />
+
+
+        <ImageButton
+            android:id="@+id/btn_erase"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".255"
+            style="@style/FunctionButton"
+            android:src="@drawable/ic_backspace_black_24dp" />
+
+        <ImageButton
+            android:id="@+id/btn_speak"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".255"
+            style="@style/FunctionButton"
+            android:src="@drawable/ic_record_voice_over_black_24dp" />
+
+        <ImageButton
+            android:id="@+id/btn_toggle_case"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".125"
+            style="@style/FunctionButton"
+            android:src="@drawable/ic_keyboard_arrow_up_black_24dp" />
+
+        <Button
+            android:id="@+id/btn_toggle_nums_letters"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".125"
+            style="@style/FunctionButton"
+            tools:text="abc" />
+
+    </LinearLayout>
+</LinearLayout>
