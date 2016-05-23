@@ -18,6 +18,8 @@ import java.util.TreeMap;
 public class MainActivity extends Activity implements OnClickListener {
     public static final String TAG = MainActivity.class.getSimpleName();
 
+    static final boolean VERBOSE = true;
+
     final static String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     final static String NUM_PAD_LETTERS = "VCDEKLMSTU";
@@ -56,13 +58,19 @@ public class MainActivity extends Activity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Vol jogger controls media
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         lex = new LexRunner(this);
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
+                log("tts ready");
                 mIsSpeechReady = true;
+
+                tts.setSpeechRate(0.7f);
+
+                log("voices ");
             }
         });
 
@@ -82,24 +90,24 @@ public class MainActivity extends Activity implements OnClickListener {
             }
         });
 
-        setupLetterViews();
-
-        setWord(mWord);
+        init();
     }
 
-    public void setupLetterViews() {
-        int i = 0;
+    public void init() {
+        // Bind letters to their keys
         for (char c : ALPHABET.toCharArray()) {
             int id = getResources().getIdentifier("btn_" + String.valueOf(c).toLowerCase(), "id", getPackageName());
-            Button button = (Button) findViewById(id);
-            mCharToButton.put(c, button);
+            mCharToButton.put(c, (Button) findViewById(id));
         }
 
         setMode(Mode.lowercase);
+        setWord(mWord);
     }
 
     public void setMode(@NonNull Mode mode) {
         if (mode == mMode) return;
+
+        log("Setting mode from " + mMode + " to " + mode);
 
         // We can't xlate between numbers and letters
         if (Mode.numpad == mode || Mode.numpad == mMode) {
@@ -110,8 +118,6 @@ public class MainActivity extends Activity implements OnClickListener {
 
         btnSpeak.setVisibility(!mWord.isEmpty() ? View.VISIBLE : View.INVISIBLE);
         btnToggleCase.setVisibility(mode.hasCase ? View.VISIBLE : View.INVISIBLE);
-
-        // TODO: Change button
         btnToggleMode.setText(mode.hasCase ? "123" : "abc");
 
         if (mode.hasCase) {
@@ -148,7 +154,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
     public void setWord(String word) {
         mWord = word;
-        Log.v(TAG, "word is now " + mWord + " empty? " + mWord.isEmpty() + " mode " + mMode);
+        log("Word is now " + mWord + " empty? " + mWord.isEmpty() + " mode " + mMode);
 
         if (!mWord.isEmpty()) {
             if (mMode.hasCase) {
@@ -159,7 +165,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
                     for (char c : nextChars) charSet.add(c);
 
-                    Log.v(TAG, "next chars " + charSet);
+                    log("next chars " + charSet);
 
                     for (Character c : mCharToButton.keySet()) {
                         //mCharToButton.get(c).setEnabled(charSet.contains(c));
@@ -171,7 +177,7 @@ public class MainActivity extends Activity implements OnClickListener {
                     Log.w(TAG, "Unable to get next letters");
                 }
             } else {
-                // Noop for numpad
+                btnSpeak.setVisibility(View.VISIBLE);
             }
 
             btnErase.setVisibility(View.VISIBLE);
@@ -184,7 +190,25 @@ public class MainActivity extends Activity implements OnClickListener {
             btnErase.setVisibility(View.INVISIBLE);
         }
 
-        lblWord.setText(mWord);
+        if (Mode.numpad == mMode) {
+            String formatted = "";
+
+            int threes = 1;
+            for (int i = mWord.length() - 1; i >= 0; i--) {
+                formatted = mWord.charAt(i) + formatted;
+
+                if (threes == 3 && i > 0) {
+                    formatted = "," + formatted;
+                    threes = 0;
+                }
+
+                threes++;
+            }
+
+            lblWord.setText(formatted);
+        } else {
+            lblWord.setText(mWord);
+        }
     }
 
     @Override
@@ -198,7 +222,7 @@ public class MainActivity extends Activity implements OnClickListener {
             text = ((Button) view).getText().toString();
         }
 
-        Log.v(TAG, "clicked " + id + " with text " + text);
+        log("clicked " + id + " with text " + text);
 
         switch (id) {
             case R.id.btn_erase:
@@ -207,7 +231,9 @@ public class MainActivity extends Activity implements OnClickListener {
                 break;
 
             case R.id.btn_speak:
-                if (mWord.length() > 0) speak(mWord);
+                if (mWord.length() > 0) {
+                    speak(mWord);
+                }
 
                 break;
 
@@ -229,7 +255,7 @@ public class MainActivity extends Activity implements OnClickListener {
                         }
 
                         if ("A".equals(strChar)) {
-                            speak("ey");
+                            speak("eh");
                         } else {
                             speak(strChar);
                         }
@@ -249,7 +275,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
     public void speak(String s) {
         if (!mIsSpeechReady || s == null || s.isEmpty()) return;
-        Log.v(TAG, "Speaking " + s);
+        log("Speaking " + s);
 
         tts.speak(s.toLowerCase(), TextToSpeech.QUEUE_FLUSH, null);
     }
@@ -258,5 +284,9 @@ public class MainActivity extends Activity implements OnClickListener {
     public void onDestroy() {
         super.onDestroy();
         if (tts != null) tts.shutdown();
+    }
+
+    public void log(String s) {
+        log(s);
     }
 }
